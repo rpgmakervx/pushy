@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/pushy.iml" filepath="$PROJECT_DIR$/pushy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pushy-client/pushy-client.iml" filepath="$PROJECT_DIR$/pushy-client/pushy-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pushy-common/pushy-common.iml" filepath="$PROJECT_DIR$/pushy-common/pushy-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pushy-server/pushy-server.iml" filepath="$PROJECT_DIR$/pushy-server/pushy-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pushy-test/pushy-test.iml" filepath="$PROJECT_DIR$/pushy-test/pushy-test.iml" />
+    </modules>
+  </component>
+</project>
