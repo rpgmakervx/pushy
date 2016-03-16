@@ -4,10 +4,13 @@ package com.github.pushy.server.handler;/**
  *  22:56
  */
 
+import com.github.pushy.pojo.agreement.Body;
+import com.github.pushy.pojo.agreement.Header;
 import com.github.pushy.pojo.agreement.PMessage;
 import com.github.pushy.server.chache.ChannelCache;
 import com.github.pushy.pojo.Connection;
 import com.github.pushy.util.Constants;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -37,7 +40,7 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //客户端地址信息
-        System.out.println("新建连接");
+        System.out.println("新建连接" + ctx.channel().id());
         InetSocketAddress inetSocketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
         Connection connection = new Connection();
         connection.setChannel(ctx.channel());
@@ -46,6 +49,7 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
         connection.setTimestamp(System.currentTimeMillis());
         ChannelCache.cachedChannels.put(ctx.channel().id().toString(),connection);
         ChannelCache.cachedChannelGroup.add(ctx.channel());
+        aloha(ctx.channel());
     }
 
     @Override
@@ -58,13 +62,9 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("读到一条消息");
-        PMessage pmessage = (PMessage) msg;
-        sendMessage(pmessage);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.flush();
+        ctx.channel().writeAndFlush("服务端已收到消息，客户端放心~");
+//        PMessage pmessage = (PMessage) msg;
+//        sendMessage(pmessage);
     }
 
     private void sendMessage(PMessage message){
@@ -80,5 +80,19 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
                         .getChannel().writeAndFlush(message);
                 break;
         }
+    }
+
+    private void aloha(Channel channel){
+        Header header = new Header();
+        header.setStatusCode(0);
+        header.setToId(channel.id().toString());
+        header.setTypeCode(1);
+        Body body = new Body();
+        body.setContent("欢迎光临服务器!");
+        PMessage pMessage = new PMessage();
+        pMessage.setBody(body);
+        pMessage.setHeader(header);
+        System.out.println("回写给客户端");
+        channel.writeAndFlush(pMessage);
     }
 }

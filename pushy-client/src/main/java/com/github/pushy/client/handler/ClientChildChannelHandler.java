@@ -6,13 +6,10 @@ package com.github.pushy.client.handler;/**
 
 import com.github.pushy.codec.PMessageDecoder;
 import com.github.pushy.codec.PMessageEncoder;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-
-import java.nio.charset.Charset;
 
 /**
  * Description : ClientChildChannelHandler
@@ -20,17 +17,16 @@ import java.nio.charset.Charset;
  * 22:21
  */
 
-public class ClientChildChannelHandler extends ChannelInitializer<SocketChannel> {
+public class ClientChildChannelHandler extends ChannelInitializer<Channel> {
     @Override
-    protected void initChannel(SocketChannel e) throws Exception {
-        // 基于换行符号
-        e.pipeline().addLast(new LineBasedFrameDecoder(1024));
+    protected void initChannel(Channel e) throws Exception {
         // 解码转 String
-        e.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
+        e.pipeline().addLast(new StringDecoder());
         // 编码器 String
-        e.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
+        e.pipeline().addLast(new StringEncoder());
         e.pipeline().addLast(new PMessageDecoder());
         e.pipeline().addLast(new PMessageEncoder());
+        e.pipeline().addLast(new ClientSocketHandler());
         // 在管道中添加我们自己的接收数据实现方法
     }
 }

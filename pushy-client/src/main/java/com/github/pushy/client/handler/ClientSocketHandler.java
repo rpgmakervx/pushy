@@ -5,8 +5,8 @@ package com.github.pushy.client.handler;/**
  */
 
 import com.github.pushy.pojo.agreement.PMessage;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * Description : ClientSocketHandler
@@ -14,11 +14,22 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * 22:24
  */
 
-public class ClientSocketHandler extends SimpleChannelInboundHandler<PMessage> {
+public class ClientSocketHandler extends ChannelHandlerAdapter {
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, PMessage pMessage) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        PMessage pMessage = (PMessage) msg;
+        System.out.println("收到服务器的消息：" + ((PMessage) msg).getBody().getContent());
+    }
 
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("创建客户端");
     }
 
     @Override

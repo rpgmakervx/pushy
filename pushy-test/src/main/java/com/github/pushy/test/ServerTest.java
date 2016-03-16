@@ -15,5 +15,6 @@ import com.github.pushy.server.PushyServer;
 public class ServerTest {
     public static void main(String[] args) {
         new Thread(new PushyServer(5000)).start();
+//        new PushyServer(5000).startup();
     }
 }

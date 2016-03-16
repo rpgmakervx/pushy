@@ -36,6 +36,14 @@ public class PMessage extends Serializer{
     }
 
     @Override
+    public String toString() {
+        return "PMessage{" +
+                "header=" + header +
+                ", body=" + body +
+                '}';
+    }
+
+    @Override
     public void write() {
         write(header);
         write(body);

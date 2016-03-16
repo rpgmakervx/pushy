@@ -39,7 +39,7 @@ public final class PushyClient {
     /**
      * 初始化
      */
-    public void init() {
+    private void init() {
         // 设置循环线程组事例
         bootstrap.group(workerGroup);
         // 设置channel工厂
@@ -52,11 +52,13 @@ public final class PushyClient {
      * 连接
      * @throws InterruptedException
      */
-    public void connect() throws InterruptedException {
+    public void connect(){
         // 连接服务端
+        init();
         ChannelFuture f = bootstrap.connect(new InetSocketAddress(this.remoteIp, this.port));
-        f.sync();
         channel = f.channel();
+        System.out.println("connect  channel状态："+channel.isActive());
+        System.out.println("分配到的channelId: "+channel.id().toString());
     }
 
     /**
@@ -80,10 +82,12 @@ public final class PushyClient {
      * @param pMessage
      * @throws InterruptedException
      */
-    public void sendMessage(PMessage pMessage) throws InterruptedException{
+    public void sendMessage(PMessage pMessage){
+        System.out.println("channel状态："+channel.isActive());
         if(channel == null || !channel.isActive()){
             connect();
         }
+        System.out.println("客户端发送一条消息："+channel.id().toString());
         channel.writeAndFlush(pMessage);
     }
 }

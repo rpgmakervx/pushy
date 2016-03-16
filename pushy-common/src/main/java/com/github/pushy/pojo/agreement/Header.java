@@ -66,6 +66,17 @@ public class Header extends Serializer{
     }
 
     @Override
+    public String toString() {
+        return "Header{" +
+                "channelId='" + channelId + '\'' +
+                ", remoteIp='" + remoteIp + '\'' +
+                ", statusCode=" + statusCode +
+                ", typeCode=" + typeCode +
+                ", toId='" + toId + '\'' +
+                '}';
+    }
+
+    @Override
     public void write() {
         writeString(channelId);
         writeString(remoteIp);

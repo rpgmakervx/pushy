@@ -26,6 +26,13 @@ public class Body extends Serializer{
     }
 
     @Override
+    public String toString() {
+        return "Body{" +
+                "content='" + content + '\'' +
+                '}';
+    }
+
+    @Override
     public void write() {
         writeString(content);
     }

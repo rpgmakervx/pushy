@@ -162,6 +162,7 @@ abstract public class Serializer {
             if(hasObject==1){
                 try {
                     //没有具体的实现类，用反射生成，然后复制当前对象的buffer，再读取对象
+                    System.out.println("读取serializer类型对象："+clazz.getSimpleName());
                     Serializer serializer = (Serializer) clazz.newInstance();
                     serializer.readFromBuffer(this.readBuffer);
                     obj = serializer;
@@ -281,6 +282,7 @@ abstract public class Serializer {
     public void writeString(String data){
         if(data==null||data.isEmpty()){
             writeShort((short)0);
+            return;
         }
         writeShort((short)data.length());
         writeBuffer.writeBytes(data.getBytes(Constants.CharsetClass.UTF8));
@@ -340,11 +342,14 @@ abstract public class Serializer {
     public <K,V> void writeMap(Map<K,V> map){
         if(map==null||map.isEmpty()){
             writeShort((short)0);
-        }
-        short size = (short) map.size();
-        for(Map.Entry<K, V> entry : map.entrySet()){
-            write(entry.getKey());
-            write(entry.getValue());
+            return ;
+        }else{
+            short size = (short) map.size();
+            writeShort(size);
+            for(Map.Entry<K, V> entry : map.entrySet()){
+                write(entry.getKey());
+                write(entry.getValue());
+            }
         }
     }
 

@@ -19,11 +19,20 @@ public class PMessageEncoder extends MessageToByteEncoder<Serializer> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext,
                           Serializer serializer, ByteBuf byteBuf) throws Exception {
+        System.out.println("进入编码阶段："+serializer);
+//        System.out.println("进入编码阶段："+serializer.getBytes());
         byte[] bytes = serializer.getBytes();
+        System.out.println("封装消息："+bytes.length);
         int len = bytes.length;
         byteBuf.writeInt(len);
         if(len>0){
             byteBuf.writeBytes(bytes);
         }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("encode 出现异常！！！");
+        cause.printStackTrace();
     }
 }
