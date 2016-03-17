@@ -20,11 +20,12 @@ import java.util.List;
 public class PMessageDecoder extends ByteToMessageDecoder{
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext,
-                          ByteBuf byteBuf, List<Object> list) throws Exception {
+    protected void decode(ChannelHandlerContext ctx,ByteBuf byteBuf,
+                          List<Object> list) throws Exception {
         PMessage pMessage = new PMessage();
-        System.out.println("进入解码阶段："+pMessage);
-        int len = byteBuf.readableBytes();
+        System.out.println(ctx.channel().id().toString()+" 进入解码阶段：");
+        int len = byteBuf.array().length;
+        System.out.println("数据大小："+byteBuf.toString());
         //有数据的条件是 可读数据大于4，因为长度用int 4字节表示
         while(true){
             System.out.println("消息解包中。。。");
@@ -36,7 +37,10 @@ public class PMessageDecoder extends ByteToMessageDecoder{
                     pMessage.readFromBytes(bytes);
                     list.add(pMessage);
                 }else break;
-            }else return;
+            }else{
+                System.out.println("没有数据了");
+                return;
+            }
         }
         return ;
     }

@@ -28,6 +28,7 @@ public class PMessageEncoder extends MessageToByteEncoder<Serializer> {
         if(len>0){
             byteBuf.writeBytes(bytes);
         }
+        System.out.println("消息编码后总长度："+byteBuf.writerIndex());
     }
 
     @Override

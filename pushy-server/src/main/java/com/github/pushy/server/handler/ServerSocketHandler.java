@@ -26,15 +26,11 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-//        PMessage pmessage = new PMessage();
-//        Body body = new Body();
-//        body.setContent("");
-//        pmessage.setBody();
-//        ctx.channel().writeAndFlush();
         System.out.println("某一链接触发异常");
-        ChannelCache.cachedChannels.remove(ctx.channel().id().toString());
-        ChannelCache.cachedChannelGroup.remove(ctx.channel());
-        ctx.channel().close();
+        cause.printStackTrace();
+//        ChannelCache.cachedChannels.remove(ctx.channel().id().toString());
+//        ChannelCache.cachedChannelGroup.remove(ctx.channel());
+//        ctx.channel().close();
     }
 
     @Override
@@ -47,9 +43,8 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
         connection.setIp(inetSocketAddress.getAddress().getHostAddress());
         connection.setPort(inetSocketAddress.getPort());
         connection.setTimestamp(System.currentTimeMillis());
-        ChannelCache.cachedChannels.put(ctx.channel().id().toString(),connection);
+        ChannelCache.cachedChannels.put(ctx.channel().id().toString(), connection);
         ChannelCache.cachedChannelGroup.add(ctx.channel());
-        aloha(ctx.channel());
     }
 
     @Override
@@ -62,7 +57,9 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("读到一条消息");
-        ctx.channel().writeAndFlush("服务端已收到消息，客户端放心~");
+        System.out.println(msg);
+//        aloha(ctx.channel());
+//        ctx.channel().writeAndFlush("服务端已收到消息，客户端放心~");
 //        PMessage pmessage = (PMessage) msg;
 //        sendMessage(pmessage);
     }

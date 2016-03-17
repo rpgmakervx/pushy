@@ -19,7 +19,7 @@ public class ClientSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         PMessage pMessage = (PMessage) msg;
-        System.out.println("收到服务器的消息：" + ((PMessage) msg).getBody().getContent());
+        System.out.println("收到服务器的消息：" + pMessage.getBody().getContent());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ClientSocketHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("创建客户端");
+        System.out.println("创建客户端 "+ctx.channel().id().toString());
     }
 
     @Override

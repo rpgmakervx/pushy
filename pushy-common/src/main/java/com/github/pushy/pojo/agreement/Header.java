@@ -15,9 +15,7 @@ import com.github.pushy.serial.Serializer;
 public class Header extends Serializer{
 
     //消息的channel id
-    private String channelId;
-
-    private String remoteIp;
+    private String senderId;
 
     private Integer statusCode;
 
@@ -26,28 +24,21 @@ public class Header extends Serializer{
     private String toId;
 
     public String getChannelId() {
-        return channelId;
-    }
-
-    public String getRemoteIp() {
-        return remoteIp;
+        return senderId;
     }
 
     public Integer getStatusCode() {
         return statusCode;
     }
 
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
+    public void setSenderlId(String senderId) {
+        this.senderId = senderId;
     }
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
     }
 
-    public void setRemoteIp(String remoteIp) {
-        this.remoteIp = remoteIp;
-    }
 
     public String getToId() {
         return toId;
@@ -68,8 +59,7 @@ public class Header extends Serializer{
     @Override
     public String toString() {
         return "Header{" +
-                "channelId='" + channelId + '\'' +
-                ", remoteIp='" + remoteIp + '\'' +
+                "senderId='" + senderId + '\'' +
                 ", statusCode=" + statusCode +
                 ", typeCode=" + typeCode +
                 ", toId='" + toId + '\'' +
@@ -78,8 +68,7 @@ public class Header extends Serializer{
 
     @Override
     public void write() {
-        writeString(channelId);
-        writeString(remoteIp);
+        writeString(senderId);
         writeInt(statusCode);
         writeInt(typeCode);
         writeString(toId);
@@ -87,8 +76,7 @@ public class Header extends Serializer{
 
     @Override
     public void read() {
-        this.channelId = readString();
-        this.remoteIp = readString();
+        this.senderId = readString();
         this.statusCode = readInt();
         this.typeCode = readInt();
         this.toId = readString();
