@@ -22,27 +22,18 @@ public class PMessageDecoder extends ByteToMessageDecoder{
     @Override
     protected void decode(ChannelHandlerContext ctx,ByteBuf byteBuf,
                           List<Object> list) throws Exception {
-        PMessage pMessage = new PMessage();
-        System.out.println(ctx.channel().id().toString()+" 进入解码阶段：");
-        int len = byteBuf.array().length;
-        System.out.println("数据大小："+byteBuf.toString());
+        int len = byteBuf.readableBytes();
         //有数据的条件是 可读数据大于4，因为长度用int 4字节表示
-        while(true){
-            System.out.println("消息解包中。。。");
-            if(len>4){
-                int dataLength = byteBuf.readInt();
-                if(dataLength>0){
-                    byte[] bytes = new byte[dataLength];
-                    byteBuf.readBytes(bytes);
-                    pMessage.readFromBytes(bytes);
-                    list.add(pMessage);
-                }else break;
-            }else{
-                System.out.println("没有数据了");
-                return;
+        if(len>4){
+            int dataLength = byteBuf.readInt();
+            if(dataLength>0){
+                PMessage pMessage = new PMessage();
+                byte[] bytes = new byte[dataLength];
+                byteBuf.readBytes(bytes);
+                pMessage.readFromBytes(bytes);
+                list.add(pMessage);
             }
         }
-        return ;
     }
 
     @Override

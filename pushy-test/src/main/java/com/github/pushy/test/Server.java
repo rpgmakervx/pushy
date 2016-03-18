@@ -4,6 +4,9 @@ package com.github.pushy.test;/**
  *  14:20
  */
 
+import com.github.pushy.test.handler.ServerHandler;
+import com.github.pushy.test.handler.ServerMessageDecoder;
+import com.github.pushy.test.handler.ServerMessageEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -41,6 +44,8 @@ public class Server {
                     e.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                     // 编码器 String
                     e.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
+                    e.pipeline().addLast(new ServerMessageDecoder());
+                    e.pipeline().addLast(new ServerMessageEncoder());
                     e.pipeline().addLast(new ServerHandler());
                 }
             });

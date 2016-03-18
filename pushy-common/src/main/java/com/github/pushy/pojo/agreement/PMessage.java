@@ -51,7 +51,8 @@ public class PMessage extends Serializer{
 
     @Override
     public void read() {
-        read(Header.class);
-        read(Body.class);
+        header = read(Header.class);
+        body = read(Body.class);
+        System.out.println("读取完以后的header和body: "+this);
     }
 }

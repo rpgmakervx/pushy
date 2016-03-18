@@ -138,6 +138,7 @@ abstract public class Serializer {
     }
 
     public <T> T read(Class<T> clazz){
+        System.out.println("读取serializer类型对象："+clazz.getSimpleName());
         Object obj = null;
         if(clazz == Integer.class||clazz == int.class){
             obj = readInt();
@@ -158,11 +159,10 @@ abstract public class Serializer {
         } else if (clazz == boolean.class || clazz == Boolean.class){
             obj = this.readBoolean();
         } else if(Serializer.class.isAssignableFrom(clazz)){
-            short hasObject = readByte();
+            byte hasObject = readByte();
             if(hasObject==1){
                 try {
                     //没有具体的实现类，用反射生成，然后复制当前对象的buffer，再读取对象
-                    System.out.println("读取serializer类型对象："+clazz.getSimpleName());
                     Serializer serializer = (Serializer) clazz.newInstance();
                     serializer.readFromBuffer(this.readBuffer);
                     obj = serializer;
@@ -315,7 +315,7 @@ abstract public class Serializer {
         }else if (obj instanceof Byte){
             writeByte((Byte) obj);
         }else if(obj instanceof Serializer){
-            writeShort((short)1);
+            writeByte((byte)1);
             Serializer serializer = (Serializer) obj;
             serializer.writeToTargetBuffer(writeBuffer);
         }else throw new RuntimeException("未知的类型,或者对象必须实现"+this.getClass().getName());

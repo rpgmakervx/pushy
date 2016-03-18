@@ -6,11 +6,8 @@ package com.github.pushy.client.handler;/**
 
 import com.github.pushy.codec.PMessageDecoder;
 import com.github.pushy.codec.PMessageEncoder;
-import com.github.pushy.util.Constants;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * Description : ClientChildChannelHandler
@@ -21,10 +18,10 @@ import io.netty.handler.codec.string.StringEncoder;
 public class ClientChildChannelHandler extends ChannelInitializer<Channel> {
     @Override
     protected void initChannel(Channel e) throws Exception {
-        // 解码转 String
-        e.pipeline().addLast(new StringDecoder(Constants.CharsetClass.UTF8));
-        // 编码器 String
-        e.pipeline().addLast(new StringEncoder(Constants.CharsetClass.UTF8));
+//        // 解码转 String
+//        e.pipeline().addLast(new StringDecoder(Constants.CharsetClass.UTF8));
+//        // 编码器 String
+//        e.pipeline().addLast(new StringEncoder(Constants.CharsetClass.UTF8));
         e.pipeline().addLast(new PMessageDecoder());
         e.pipeline().addLast(new PMessageEncoder());
         e.pipeline().addLast(new ClientSocketHandler());

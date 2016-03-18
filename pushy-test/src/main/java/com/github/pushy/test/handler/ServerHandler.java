@@ -1,18 +1,18 @@
-package com.github.pushy.test;/**
+package com.github.pushy.test.handler;/**
  * Description : ServerHandler
  * Created by YangZH on 2016/3/16 0016
  *  14:23
  */
 
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * Description : ServerHandler
  * Created by YangZH on 2016/3/16 0016
  * 14:23
  */
-public class ServerHandler extends ChannelHandlerAdapter {
+public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
 
     /**
@@ -40,9 +40,14 @@ public class ServerHandler extends ChannelHandlerAdapter {
         cause.printStackTrace();
     }
 
+//    @Override
+//    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+//
+//    }
+
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("客户端消息："+msg);
+    protected void messageReceived(ChannelHandlerContext ctx, String s) throws Exception {
+        System.out.println("客户端消息："+s);
         ctx.channel().writeAndFlush("hi");
     }
 }

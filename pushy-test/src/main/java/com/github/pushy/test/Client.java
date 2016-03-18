@@ -4,6 +4,9 @@ package com.github.pushy.test;/**
  *  14:25
  */
 
+import com.github.pushy.test.handler.ClientHandler;
+import com.github.pushy.test.handler.MessageDecoder;
+import com.github.pushy.test.handler.MessageEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -40,9 +43,10 @@ public class Client {
 
                 @Override
                 protected void initChannel(Channel ch) throws Exception {
-//                    ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
                     ch.pipeline().addLast(new StringDecoder());
                     ch.pipeline().addLast(new StringEncoder());
+                    ch.pipeline().addLast(new MessageDecoder());
+                    ch.pipeline().addLast(new MessageEncoder());
                     ch.pipeline().addLast(new ClientHandler());
                 }
             });
