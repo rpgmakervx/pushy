@@ -4,10 +4,12 @@ package com.github.pushy.test; /**
  *  22:54
  */
 
-import com.github.pushy.client.PushyClient;
-import com.github.pushy.pojo.agreement.Body;
-import com.github.pushy.pojo.agreement.Header;
-import com.github.pushy.pojo.agreement.PMessage;
+import com.github.pushy.client.bootstrap.ClientBootstrap;
+import com.github.pushy.common.pojo.agreement.Body;
+import com.github.pushy.common.pojo.agreement.Header;
+import com.github.pushy.common.pojo.message.TransMessage;
+import com.github.pushy.server.bootstrap.PushyServer;
+import com.github.pushy.common.util.Constants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,24 +25,23 @@ public class ClientTest {
 
 
     public static void main(String[] args) throws IOException {
-//        new PushyServer(5000);
-        PushyClient client = new PushyClient("localhost",5000);
+        new PushyServer(5000);
+        ClientBootstrap client = new ClientBootstrap("localhost",5000);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         client.connect();
         while(true){
             System.out.println("请输入：");
             String msg = bufferedReader.readLine();
             Header header = new Header();
-            header.setStatusCode(0);
+            header.setStatusCode(Constants.StatusCode.SUCCESS);
             header.setToId(client.getChannel().id().toString());
-            header.setTypeCode(1);
+            header.setTypeCode(Constants.MessageType.POINT);
             Body body = new Body();
             body.setContent(msg);
-            PMessage pMessage = new PMessage();
-            pMessage.setBody(body);
-            pMessage.setHeader(header);
-            client.sendMessage(pMessage);
+            TransMessage transMessage = new TransMessage();
+            transMessage.setBody(body);
+            transMessage.setHeader(header);
+            client.sendMessage(transMessage);
         }
-
     }
 }

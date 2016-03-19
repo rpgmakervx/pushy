@@ -4,7 +4,7 @@ package com.github.pushy.test; /**
  *  22:54
  */
 
-import com.github.pushy.server.PushyServer;
+import com.github.pushy.server.bootstrap.PushyServer;
 
 /**
  * Description : ServerTest

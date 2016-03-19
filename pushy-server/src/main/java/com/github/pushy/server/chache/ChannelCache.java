@@ -4,7 +4,7 @@ package com.github.pushy.server.chache;/**
  *  14:43
  */
 
-import com.github.pushy.pojo.Connection;
+import com.github.pushy.common.pojo.Connection;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;

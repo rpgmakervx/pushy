@@ -4,8 +4,8 @@ package com.github.pushy.server.handler;/**
  *  22:48
  */
 
-import com.github.pushy.codec.PMessageDecoder;
-import com.github.pushy.codec.PMessageEncoder;
+import com.github.pushy.common.codec.PMessageDecoder;
+import com.github.pushy.common.codec.PMessageEncoder;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 

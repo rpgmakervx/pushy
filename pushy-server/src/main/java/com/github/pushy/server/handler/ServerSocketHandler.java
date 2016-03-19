@@ -4,12 +4,12 @@ package com.github.pushy.server.handler;/**
  *  22:56
  */
 
-import com.github.pushy.pojo.agreement.Body;
-import com.github.pushy.pojo.agreement.Header;
-import com.github.pushy.pojo.agreement.PMessage;
+import com.github.pushy.common.pojo.Connection;
+import com.github.pushy.common.pojo.agreement.Body;
+import com.github.pushy.common.pojo.agreement.Header;
+import com.github.pushy.common.pojo.message.TransMessage;
 import com.github.pushy.server.chache.ChannelCache;
-import com.github.pushy.pojo.Connection;
-import com.github.pushy.util.Constants;
+import com.github.pushy.common.util.Constants;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -57,21 +57,17 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("读到一条消息");
-        System.out.println(msg);
-//        aloha(ctx.channel());
-//        ctx.channel().writeAndFlush("服务端已收到消息，客户端放心~");
-//        PMessage pmessage = (PMessage) msg;
-//        sendMessage(pmessage);
+        sendMessage((TransMessage)msg);
     }
 
-    private void sendMessage(PMessage message){
-        int statusCode = message.getHeader().getStatusCode();
+    private void sendMessage(TransMessage message){
+        byte statusCode = message.getHeader().getStatusCode();
         switch (statusCode){
-            case Constants.TypeCode.GROUP:
+            case Constants.MessageType.GROUP:
                 System.out.println("群发");
                 ChannelCache.cachedChannelGroup.writeAndFlush(message);
                 break;
-            case Constants.TypeCode.POINT:
+            case Constants.MessageType.POINT:
                 System.out.println("单发");
                 ChannelCache.cachedChannels.get(message.getHeader().getChannelId())
                         .getChannel().writeAndFlush(message);
@@ -81,15 +77,15 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
 
     private void aloha(Channel channel){
         Header header = new Header();
-        header.setStatusCode(0);
+        header.setStatusCode(Constants.StatusCode.SUCCESS);
         header.setToId(channel.id().toString());
-        header.setTypeCode(1);
+        header.setMessageType(Constants.MessageType.POINT);
         Body body = new Body();
-        body.setContent("欢迎光临服务器!");
-        PMessage pMessage = new PMessage();
-        pMessage.setBody(body);
-        pMessage.setHeader(header);
+        body.setContent("hello I am server!!");
+        TransMessage transMessage = new TransMessage();
+        transMessage.setBody(body);
+        transMessage.setHeader(header);
         System.out.println("回写给客户端");
-        channel.writeAndFlush(pMessage);
+        channel.writeAndFlush(transMessage);
     }
 }

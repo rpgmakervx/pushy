@@ -4,7 +4,10 @@ package com.github.pushy.client.handler;/**
  *  22:24
  */
 
-import com.github.pushy.pojo.agreement.PMessage;
+import com.github.pushy.client.listener.MessageListener;
+import com.github.pushy.client.manager.MessageManager;
+import com.github.pushy.common.pojo.message.TransMessage;
+import com.github.pushy.common.util.Constants;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -16,10 +19,29 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class ClientSocketHandler extends ChannelHandlerAdapter {
 
+    private MessageManager messageManager;
+
+    public ClientSocketHandler(MessageManager messageManager){
+        this.messageManager = messageManager;
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        PMessage pMessage = (PMessage) msg;
-        System.out.println("收到服务器的消息：" + pMessage.getBody().getContent());
+        TransMessage transMessage = (TransMessage) msg;
+        MessageListener listener = messageManager.getMessageListener();
+        byte msgType = transMessage.getHeader().getMessageType();
+        switch(msgType){
+            case Constants.MessageType.GROUP:
+                listener.onGroupMessageReceived(transMessage);
+                break;
+            case Constants.MessageType.POINT:
+                listener.onPointMessageReceived(transMessage);
+                break;
+            case Constants.MessageType.CMD:
+                listener.onCMDMessage(transMessage);
+                break;
+        }
+
     }
 
     @Override
