@@ -4,8 +4,7 @@ package com.github.pushy.common.pojo.message;/**
  *  16:00
  */
 
-import com.github.pushy.common.pojo.agreement.Body;
-import com.github.pushy.common.pojo.agreement.Header;
+import com.github.pushy.common.pojo.agreement.TransHeader;
 import com.github.pushy.common.serial.Serializer;
 
 /**
@@ -16,42 +15,47 @@ import com.github.pushy.common.serial.Serializer;
  * 传输过过程中的消息，并不暴露给客户端
  */
 
-public class TransMessage extends Serializer{
+public class TransMessage extends Serializer implements IMessage{
 
     //消息头
-    private Header header;
+    private TransHeader transHeader;
     //消息体
-    private Body body;
+    private String content;
 
-    public Header getHeader() {
-        return header;
+    public String getContent() {
+        return content;
     }
 
-    public void setHeader(Header header) {
-        this.header = header;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Body getBody() {
-        return body;
+    public TransHeader getTransHeader() {
+        return transHeader;
     }
 
-    public void setBody(Body body) {
-        this.body = body;
+    public void setTransHeader(TransHeader transHeader) {
+        this.transHeader = transHeader;
     }
+
 
     @Override
     public String toString() {
         return "PMessage{" +
-                "header=" + header +
-                ", body=" + body +
+                "header=" + transHeader +
+                ", content=" + content +
                 '}';
     }
 
     @Override
     public void write() {
+        write(transHeader);
+        writeString(content);
     }
 
     @Override
     public void read() {
+        transHeader = read(TransHeader.class);
+        content = readString();
     }
 }

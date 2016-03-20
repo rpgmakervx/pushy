@@ -28,14 +28,15 @@ public class ClientSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         TransMessage transMessage = (TransMessage) msg;
+        System.out.println("客户端收到消息 "+msg);
         MessageListener listener = messageManager.getMessageListener();
-        byte msgType = transMessage.getHeader().getMessageType();
+        byte msgType = transMessage.getTransHeader().getMessageType();
         switch(msgType){
             case Constants.MessageType.GROUP:
                 listener.onGroupMessageReceived(transMessage);
                 break;
-            case Constants.MessageType.POINT:
-                listener.onPointMessageReceived(transMessage);
+            case Constants.MessageType.SINGLE:
+                listener.onSingleMessageReceived(transMessage);
                 break;
             case Constants.MessageType.CMD:
                 listener.onCMDMessage(transMessage);

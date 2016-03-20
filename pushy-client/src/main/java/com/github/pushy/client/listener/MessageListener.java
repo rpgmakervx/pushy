@@ -18,7 +18,7 @@ public interface MessageListener extends EventListener{
 
     public void onGroupMessageReceived(TransMessage message);
 
-    public void onPointMessageReceived(TransMessage message);
+    public void onSingleMessageReceived(TransMessage message);
 
     public void onCMDMessage(TransMessage message);
 }

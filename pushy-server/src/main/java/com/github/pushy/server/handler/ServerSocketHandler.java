@@ -5,12 +5,10 @@ package com.github.pushy.server.handler;/**
  */
 
 import com.github.pushy.common.pojo.Connection;
-import com.github.pushy.common.pojo.agreement.Body;
-import com.github.pushy.common.pojo.agreement.Header;
 import com.github.pushy.common.pojo.message.TransMessage;
-import com.github.pushy.server.chache.ChannelCache;
 import com.github.pushy.common.util.Constants;
-import io.netty.channel.Channel;
+import com.github.pushy.server.chache.ChannelCache;
+import com.github.pushy.server.chache.UserCache;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -51,41 +49,43 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         ChannelCache.cachedChannels.remove(ctx.channel().id().toString());
         ChannelCache.cachedChannelGroup.remove(ctx.channel());
+        UserCache.cachedUsers.remove(ctx.channel().id().toString());
         ctx.close();
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("读到一条消息");
-        sendMessage((TransMessage)msg);
+        TransMessage transMessage = (TransMessage)msg;
+        System.out.println("读到一条消息  "+transMessage.getContent());
+        String senderChannelId = UserCache.cachedUsers.get(transMessage.getTransHeader().getSenderId());
+        if(senderChannelId == null){
+            UserCache.cachedUsers.put(transMessage.getTransHeader().getSenderId(),ctx.channel().id().toString());
+        }
+        sendMessage(transMessage);
     }
 
     private void sendMessage(TransMessage message){
-        byte statusCode = message.getHeader().getStatusCode();
-        switch (statusCode){
+        byte messageType = message.getTransHeader().getMessageType();
+        switch (messageType){
             case Constants.MessageType.GROUP:
                 System.out.println("群发");
                 ChannelCache.cachedChannelGroup.writeAndFlush(message);
                 break;
-            case Constants.MessageType.POINT:
+            case Constants.MessageType.SINGLE:
                 System.out.println("单发");
-                ChannelCache.cachedChannels.get(message.getHeader().getChannelId())
+                String toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getToId());
+                System.out.println("转成channelId是："+toChannelId);
+                if (toChannelId == null){
+//                    message.setContent("查无此人");
+//                    toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getSenderId());
+//                    ChannelCache.cachedChannels.get(toChannelId)
+//                            .getChannel().writeAndFlush(message);
+                    return;
+                }
+                ChannelCache.cachedChannels.get(toChannelId)
                         .getChannel().writeAndFlush(message);
                 break;
         }
     }
 
-    private void aloha(Channel channel){
-        Header header = new Header();
-        header.setStatusCode(Constants.StatusCode.SUCCESS);
-        header.setToId(channel.id().toString());
-        header.setMessageType(Constants.MessageType.POINT);
-        Body body = new Body();
-        body.setContent("hello I am server!!");
-        TransMessage transMessage = new TransMessage();
-        transMessage.setBody(body);
-        transMessage.setHeader(header);
-        System.out.println("回写给客户端");
-        channel.writeAndFlush(transMessage);
-    }
 }

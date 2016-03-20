@@ -4,19 +4,18 @@ package com.github.pushy.common.pojo.message;/**
  *  11:11
  */
 
+import com.github.pushy.common.pojo.agreement.PHeader;
+
 /**
  * Description : PMessage
  * Created by YangZH on 2016/3/19 0019
  * 11:11
  */
 
-public class PMessage {
+public class PMessage implements IMessage{
 
-    private ChatType chatType ;
-
+    private PHeader pHeader;
     private String content;
-
-    private String toId;
 
 
     public String getContent() {
@@ -27,19 +26,11 @@ public class PMessage {
         this.content = content;
     }
 
-    public String getToId() {
-        return toId;
+    public PHeader getpHeader() {
+        return pHeader;
     }
 
-    public void setToId(String toId) {
-        this.toId = toId;
-    }
-
-    public ChatType getChatType() {
-        return chatType;
-    }
-
-    public void setChatType(ChatType chatType){
-        this.chatType = chatType;
+    public void setpHeader(PHeader pHeader) {
+        this.pHeader = pHeader;
     }
 }

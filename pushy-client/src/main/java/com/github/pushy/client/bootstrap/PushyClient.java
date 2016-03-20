@@ -49,6 +49,7 @@ public final class PushyClient {
     private void initClient(){
         bootstrap = new ClientBootstrap(Constants.RemoteHost.LOCAL_HOST,
                     Constants.RemoteHost.PORT,this.messageManager);
+        bootstrap.connect();
     }
 
     public void sendMessage(PMessage pMessage){

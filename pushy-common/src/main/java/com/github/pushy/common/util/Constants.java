@@ -21,9 +21,10 @@ public class Constants {
     }
 
     public static final class MessageType{
-        public static final byte GROUP = 0X0;
-        public static final byte POINT = 0X1;
-        public static final byte CMD = 0X2;
+        public static final byte CMD = 0X0;
+        public static final byte SINGLE = 0X1;
+        public static final byte GROUP = 0X3;
+        public static final byte ALL = 0X4;
     }
 
     public static final class CharsetClass{
@@ -34,6 +35,6 @@ public class Constants {
     public static final class RemoteHost{
         public static final String LOCAL_HOST = "localhost";
         public static final String REMOTE_PATH = "114.215.143.83";
-        public static final int PORT = 7000;
+        public static final int PORT = 5000;
     }
 }

@@ -4,6 +4,8 @@ package com.github.pushy.client.manager;/**
  *  23:32
  */
 
+import com.github.pushy.common.pojo.User;
+
 /**
  * Description : CurrentUser
  * Created by YangZH on 2016/3/18 0018
@@ -12,5 +14,5 @@ package com.github.pushy.client.manager;/**
 
 public class CurrentUser {
 
-    public static String userId;
+    public static User currentUser;
 }

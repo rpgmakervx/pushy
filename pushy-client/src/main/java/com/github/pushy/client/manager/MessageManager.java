@@ -27,7 +27,8 @@ public class MessageManager {
         this.client = client;
     }
     /**
-     * 发送消息
+     * 发送传输消息
+     * 客户端无需调用此类
      * @param transMessage 消息封装体
      */
     public void sendMessage(TransMessage transMessage){

@@ -23,6 +23,7 @@ public class PMessageDecoder extends ByteToMessageDecoder{
     protected void decode(ChannelHandlerContext ctx,ByteBuf byteBuf,
                           List<Object> list) throws Exception {
         int len = byteBuf.readableBytes();
+        System.out.println("进入解码器，可读数据长度："+len);
         //有数据的条件是 可读数据大于4，因为长度用int 4字节表示
         if(len>4){
             int dataLength = byteBuf.readInt();

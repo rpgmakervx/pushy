@@ -89,9 +89,9 @@ public final class ClientBootstrap {
      * @throws InterruptedException
      */
     public void sendMessage(TransMessage transMessage){
-        if(channel == null || !channel.isActive()){
-            connect();
-        }
+//        if(channel == null || !channel.isActive()){
+//            connect();
+//        }
         channel.writeAndFlush(transMessage);
     }
 }
