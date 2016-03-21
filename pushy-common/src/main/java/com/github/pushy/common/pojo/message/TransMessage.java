@@ -4,6 +4,7 @@ package com.github.pushy.common.pojo.message;/**
  *  16:00
  */
 
+import com.github.pushy.common.pojo.agreement.Body;
 import com.github.pushy.common.pojo.agreement.TransHeader;
 import com.github.pushy.common.serial.Serializer;
 
@@ -20,14 +21,14 @@ public class TransMessage extends Serializer implements IMessage{
     //消息头
     private TransHeader transHeader;
     //消息体
-    private String content;
+    private Body body;
 
-    public String getContent() {
-        return content;
+    public Body getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBody(Body body) {
+        this.body = body;
     }
 
     public TransHeader getTransHeader() {
@@ -43,19 +44,19 @@ public class TransMessage extends Serializer implements IMessage{
     public String toString() {
         return "PMessage{" +
                 "header=" + transHeader +
-                ", content=" + content +
+                ", body=" + body +
                 '}';
     }
 
     @Override
     public void write() {
         write(transHeader);
-        writeString(content);
+        write(body);
     }
 
     @Override
     public void read() {
         transHeader = read(TransHeader.class);
-        content = readString();
+        body = read(Body.class);
     }
 }

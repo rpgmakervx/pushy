@@ -134,7 +134,9 @@ abstract public class Serializer {
         }
         byte[] bytes = new byte[size];
         readBuffer.readBytes(bytes);
-        return new String(bytes, Constants.CharsetClass.UTF8);
+        String str = new String(bytes, Constants.CharsetClass.UTF8);
+        System.out.println("解析的字符串: "+str+",长度："+size);
+        return str;
     }
 
     public <T> T read(Class<T> clazz){
@@ -284,7 +286,9 @@ abstract public class Serializer {
             writeShort((short)0);
             return;
         }
-        writeShort((short)data.length());
+        short len = (short) data.getBytes().length;
+        writeShort(len);
+        System.out.println("写入字符串长度："+data.length()+",字符串是："+new String(data.getBytes(Constants.CharsetClass.UTF8)));
         writeBuffer.writeBytes(data.getBytes(Constants.CharsetClass.UTF8));
     }
 

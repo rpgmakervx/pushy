@@ -7,6 +7,7 @@ package com.github.pushy.test; /**
 import com.github.pushy.client.bootstrap.PushyClient;
 import com.github.pushy.client.listener.MessageListener;
 import com.github.pushy.client.manager.MessageManager;
+import com.github.pushy.common.pojo.agreement.Body;
 import com.github.pushy.common.pojo.agreement.TransHeader;
 import com.github.pushy.common.pojo.message.TransMessage;
 import com.github.pushy.common.util.Constants;
@@ -33,19 +34,19 @@ public class ClientTest {
             @Override
             public void onGroupMessageReceived(TransMessage message) {
                 System.out.println("收到群消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getContent());
+                        "   消息内容："+message.getBody());
             }
 
             @Override
             public void onSingleMessageReceived(TransMessage message) {
                 System.out.println("收到单人消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getContent());
+                        "   消息内容："+message.getBody());
 
             }
             @Override
             public void onCMDMessage(TransMessage message) {
                 System.out.println("收到透传消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getContent());
+                        "   消息内容："+message.getBody());
             }
         });
         String userid = StringUtil.randomCode(6);
@@ -55,13 +56,15 @@ public class ClientTest {
             String toId = bufferedReader.readLine();
             System.out.println("请输入消息内容：");
             String msg = bufferedReader.readLine();
+            Body body = new Body();
+            body.setMessage(msg);
             TransHeader transHeader = new TransHeader();
             transHeader.setStatusCode(Constants.StatusCode.SUCCESS);
             transHeader.setToId(toId);
             transHeader.setSenderId(userid);
             transHeader.setMessageType(Constants.MessageType.SINGLE);
             TransMessage transMessage = new TransMessage();
-            transMessage.setContent(msg);
+            transMessage.setBody(body);
             transMessage.setTransHeader(transHeader);
             msgManager.sendMessage(transMessage);
         }

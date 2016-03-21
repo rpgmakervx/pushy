@@ -6,7 +6,12 @@ package com.github.pushy.client.manager;/**
 
 import com.github.pushy.client.bootstrap.ClientBootstrap;
 import com.github.pushy.client.listener.MessageListener;
+import com.github.pushy.common.pojo.User;
+import com.github.pushy.common.pojo.agreement.Body;
+import com.github.pushy.common.pojo.agreement.TransHeader;
 import com.github.pushy.common.pojo.message.TransMessage;
+import com.github.pushy.common.util.Constants;
+import com.github.pushy.common.util.GsonUtils;
 
 /**
  * Description : MessageManager
@@ -42,6 +47,17 @@ public class MessageManager {
         this.listener = listener;
     }
 
+    public void login(User user){
+        String json = GsonUtils.toJson(user);
+        TransMessage transMessage = new TransMessage();
+        Body body = new Body();
+        body.setMessage(json);
+        transMessage.setBody(body);
+        TransHeader transHeader = new TransHeader();
+        transHeader.setMessageType(Constants.MessageType.CMD);
+        transMessage.setTransHeader(transHeader);
+
+    }
     public MessageListener getMessageListener(){
         return this.listener;
     }

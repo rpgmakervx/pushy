@@ -29,6 +29,9 @@ public class PMessageEncoder extends MessageToByteEncoder<Serializer> {
             byteBuf.writeBytes(bytes);
         }
         System.out.println("消息编码后总长度："+byteBuf.writerIndex());
+//        TransMessage msg = new TransMessage();
+//        msg.readFromBuffer(byteBuf);
+//        System.out.println("编码完的结果："+msg);
     }
 
     @Override

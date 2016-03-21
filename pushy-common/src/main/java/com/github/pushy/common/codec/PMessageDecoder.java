@@ -32,6 +32,7 @@ public class PMessageDecoder extends ByteToMessageDecoder{
                 byte[] bytes = new byte[dataLength];
                 byteBuf.readBytes(bytes);
                 transMessage.readFromBytes(bytes);
+                System.out.println("解码器解析出的对象："+transMessage);
                 list.add(transMessage);
             }
         }

@@ -56,7 +56,7 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         TransMessage transMessage = (TransMessage)msg;
-        System.out.println("读到一条消息  "+transMessage.getContent());
+        System.out.println("读到一条消息  "+transMessage.getBody());
         String senderChannelId = UserCache.cachedUsers.get(transMessage.getTransHeader().getSenderId());
         if(senderChannelId == null){
             UserCache.cachedUsers.put(transMessage.getTransHeader().getSenderId(),ctx.channel().id().toString());
@@ -75,7 +75,7 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
                 System.out.println("单发");
                 String toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getToId());
                 System.out.println("转成channelId是："+toChannelId);
-                if (toChannelId == null){
+                if (toChannelId == null||ChannelCache.cachedChannels.get(toChannelId)==null){
 //                    message.setContent("查无此人");
 //                    toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getSenderId());
 //                    ChannelCache.cachedChannels.get(toChannelId)
