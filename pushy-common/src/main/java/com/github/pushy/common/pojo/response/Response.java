@@ -1,14 +1,10 @@
-package com.github.pushy.common.pojo.response;/**
- * Description : Response
- * Created by YangZH on 2016/3/21 0021
- *  23:10
- */
+package com.github.pushy.common.pojo.response;
 
 import java.util.Arrays;
 
 /**
  * Description : Response
- * Created by YangZH on 2016/3/21 0021
+ * Created by code4j on 2016/3/21 0021
  * 23:10
  */
 
@@ -32,6 +28,14 @@ public class Response {
      * 请求数据（Serializer子类序列化或json字符串序列化）
      */
     private byte[] data;
+
+    public Response(){}
+    public Response(byte type, byte action, byte statusCode, byte[] data) {
+        this.type = type;
+        this.action = action;
+        this.statusCode = statusCode;
+        this.data = data;
+    }
 
     public byte getType() {
         return type;

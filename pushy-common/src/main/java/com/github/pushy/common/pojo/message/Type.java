@@ -1,12 +1,8 @@
-package com.github.pushy.common.pojo.message;/**
- * Description : ChatType
- * Created by YangZH on 2016/3/19 0019
- *  11:16
- */
+package com.github.pushy.common.pojo.message;
 
 /**
  * Description : ChatType
- * Created by YangZH on 2016/3/19 0019
+ * Created by code4j on 2016/3/19 0019
  * 11:16
  *
  * 消息类型

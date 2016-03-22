@@ -1,14 +1,10 @@
-package com.github.pushy.common.pojo;/**
- * Description : Connection
- * Created by YangZH on 2016/3/11 0011
- *  21:54
- */
+package com.github.pushy.common.pojo;
 
 import io.netty.channel.Channel;
 
 /**
  * Description : Connection
- * Created by YangZH on 2016/3/11 0011
+ * Created by code4j on 2016/3/11 0011
  * 21:54
  * 包装了channel对象，用来抽象一个长连接
  */

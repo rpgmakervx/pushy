@@ -1,8 +1,4 @@
-package com.github.pushy.common.serial;/**
- * Description : BufferFactory
- * Created by YangZH on 2016/3/13 0013
- *  09:33
- */
+package com.github.pushy.common.serial;
 
 import io.netty.buffer.*;
 
@@ -10,7 +6,7 @@ import java.nio.ByteOrder;
 
 /**
  * Description : BufferFactory
- * Created by YangZH on 2016/3/13 0013
+ * Created by code4j on 2016/3/13 0013
  * 09:33
  */
 

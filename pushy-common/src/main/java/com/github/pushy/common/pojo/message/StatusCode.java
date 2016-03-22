@@ -1,6 +1,6 @@
 package com.github.pushy.common.pojo.message;/**
  * Description : StatusCode
- * Created by YangZH on 2016/3/19 0019
+ * Created by code4j on 2016/3/19 0019
  *  23:06
  */
 

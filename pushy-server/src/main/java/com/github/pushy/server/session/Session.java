@@ -1,13 +1,12 @@
-package com.github.pushy.server.session;/**
- * Description : Session
- * Created by YangZH on 2016/3/21 0021
- *  22:13
- */
+package com.github.pushy.server.session;
 
 /**
  * Description : Session
- * Created by YangZH on 2016/3/21 0021
+ * Created by code4j on 2016/3/21 0021
  * 22:13
+ *
+ * Session就是抽象出来的Channel。防止server端的用户直接使用channel
+ * 并简化包装了channel的部分操作
  */
 
 public interface Session {

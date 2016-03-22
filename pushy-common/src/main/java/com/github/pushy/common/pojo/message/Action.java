@@ -6,7 +6,7 @@ package com.github.pushy.common.pojo.message;/**
 
 /**
  * Description : Action
- * Created by YangZH on 2016/3/22 0022
+ * Created by code4j on 2016/3/22 0022
  * 14:36
  */
 

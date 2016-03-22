@@ -1,8 +1,4 @@
-package com.github.pushy.common.serial;/**
- * Description : Serializer
- * Created by YangZH on 2016/3/11 0011
- *  23:08
- */
+package com.github.pushy.common.serial;
 
 import com.github.pushy.common.util.Constants;
 import io.netty.buffer.ByteBuf;
@@ -14,7 +10,7 @@ import java.util.Map;
 
 /**
  * Description : Serializer
- * Created by YangZH on 2016/3/11 0011
+ * Created by code4j on 2016/3/11 0011
  * 23:08
  * 包含一对读写ByteBuf,以及对各种类型的读写方法。
  * 开放write read方法给客户端自定义读写实现,

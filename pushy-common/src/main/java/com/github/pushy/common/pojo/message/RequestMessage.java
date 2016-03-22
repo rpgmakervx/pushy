@@ -8,7 +8,7 @@ import com.github.pushy.common.serial.Serializer;
 
 /**
  * Description : AbstractMessage
- * Created by YangZH on 2016/3/19 0019
+ * Created by code4j on 2016/3/19 0019
  * 14:04
  *
  * 仅仅定义一个抽象消息，为Builder构造消息准备

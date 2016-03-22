@@ -1,14 +1,10 @@
-package com.github.pushy.common.pojo.request;/**
- * Description : Request
- * Created by YangZH on 2016/3/21 0021
- *  23:09
- */
+package com.github.pushy.common.pojo.request;
 
 import java.util.Arrays;
 
 /**
  * Description : Request
- * Created by YangZH on 2016/3/21 0021
+ * Created by code4j on 2016/3/21 0021
  * 23:09
  */
 
