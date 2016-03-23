@@ -7,10 +7,7 @@ package com.github.pushy.test; /**
 import com.github.pushy.client.bootstrap.PushyClient;
 import com.github.pushy.client.listener.MessageListener;
 import com.github.pushy.client.manager.MessageManager;
-import com.github.pushy.common.pojo.agreement.Body;
-import com.github.pushy.common.pojo.agreement.TransHeader;
-import com.github.pushy.common.pojo.message.TransMessage;
-import com.github.pushy.common.util.Constants;
+import com.github.pushy.common.pojo.message.RequestMessage;
 import com.github.pushy.common.util.StringUtil;
 
 import java.io.BufferedReader;
@@ -32,41 +29,30 @@ public class ClientTest {
 
         msgManager.setMessageListener(new MessageListener() {
             @Override
-            public void onGroupMessageReceived(TransMessage message) {
-                System.out.println("收到群消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getBody());
+            public void onGroupMessageReceived(RequestMessage message) {
+                System.out.println("收到群消息--> 发送者："+
+                        "   消息内容："+message.getMessage());
             }
 
             @Override
-            public void onSingleMessageReceived(TransMessage message) {
-                System.out.println("收到单人消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getBody());
+            public void onSingleMessageReceived(RequestMessage message) {
+                System.out.println("收到单人消息--> 发送者："+
+                        "   消息内容："+message.getMessage());
 
             }
             @Override
-            public void onCMDMessage(TransMessage message) {
-                System.out.println("收到透传消息--> 发送者："+message.getTransHeader().getSenderId()+
-                        "   消息内容："+message.getBody());
+            public void onCMDMessage(RequestMessage message) {
+                System.out.println("收到透传消息--> 发送者："+
+                        "   消息内容："+message.getMessage());
             }
         });
         String userid = StringUtil.randomCode(6);
         System.out.println("用户随机id: "+userid);
         while(true){
             System.out.println("请输入接收方送方id：");
-            String toId = bufferedReader.readLine();
+            String targetId = bufferedReader.readLine();
             System.out.println("请输入消息内容：");
             String msg = bufferedReader.readLine();
-            Body body = new Body();
-            body.setMessage(msg);
-            TransHeader transHeader = new TransHeader();
-            transHeader.setStatusCode(Constants.StatusCode.SUCCESS);
-            transHeader.setToId(toId);
-            transHeader.setSenderId(userid);
-            transHeader.setMessageType(Constants.MessageType.SINGLE);
-            TransMessage transMessage = new TransMessage();
-            transMessage.setBody(body);
-            transMessage.setTransHeader(transHeader);
-            msgManager.sendMessage(transMessage);
         }
 
     }

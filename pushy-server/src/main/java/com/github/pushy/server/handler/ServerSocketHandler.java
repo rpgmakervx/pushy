@@ -5,8 +5,9 @@ package com.github.pushy.server.handler;/**
  */
 
 import com.github.pushy.common.pojo.Connection;
-import com.github.pushy.common.pojo.message.TransMessage;
-import com.github.pushy.common.util.Constants;
+import com.github.pushy.common.pojo.message.Type;
+import com.github.pushy.common.pojo.request.Request;
+import com.github.pushy.common.pojo.message.RequestMessage;
 import com.github.pushy.server.chache.ChannelCache;
 import com.github.pushy.server.chache.UserCache;
 import io.netty.channel.ChannelHandlerAdapter;
@@ -55,35 +56,25 @@ public class ServerSocketHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        TransMessage transMessage = (TransMessage)msg;
-        System.out.println("读到一条消息  "+transMessage.getBody());
-        String senderChannelId = UserCache.cachedUsers.get(transMessage.getTransHeader().getSenderId());
-        if(senderChannelId == null){
-            UserCache.cachedUsers.put(transMessage.getTransHeader().getSenderId(),ctx.channel().id().toString());
-        }
-        sendMessage(transMessage);
+        Request request = (Request)msg;
+        System.out.println("读到一条消息  " + request.getData());
+
+
     }
 
-    private void sendMessage(TransMessage message){
-        byte messageType = message.getTransHeader().getMessageType();
-        switch (messageType){
-            case Constants.MessageType.GROUP:
-                System.out.println("群发");
-                ChannelCache.cachedChannelGroup.writeAndFlush(message);
+    private void sendData(Request request){
+        switch(request.getType()){
+            case Type.USER:
+                RequestMessage message =
+                        RequestMessage.valueOf(request.getData());
                 break;
-            case Constants.MessageType.SINGLE:
-                System.out.println("单发");
-                String toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getToId());
-                System.out.println("转成channelId是："+toChannelId);
-                if (toChannelId == null||ChannelCache.cachedChannels.get(toChannelId)==null){
-//                    message.setContent("查无此人");
-//                    toChannelId = UserCache.cachedUsers.get(message.getTransHeader().getSenderId());
-//                    ChannelCache.cachedChannels.get(toChannelId)
-//                            .getChannel().writeAndFlush(message);
-                    return;
-                }
-                ChannelCache.cachedChannels.get(toChannelId)
-                        .getChannel().writeAndFlush(message);
+            case Type.GROUP:
+                break;
+            case Type.CMD:
+                break;
+            case Type.PUSH:
+                break;
+            case Type.ALL:
                 break;
         }
     }

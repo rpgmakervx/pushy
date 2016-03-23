@@ -4,7 +4,7 @@ package com.github.pushy.client.listener;/**
  *  13:13
  */
 
-import com.github.pushy.common.pojo.message.TransMessage;
+import com.github.pushy.common.pojo.message.RequestMessage;
 
 import java.util.EventListener;
 
@@ -16,9 +16,9 @@ import java.util.EventListener;
 
 public interface MessageListener extends EventListener{
 
-    public void onGroupMessageReceived(TransMessage message);
+    public void onGroupMessageReceived(RequestMessage message);
 
-    public void onSingleMessageReceived(TransMessage message);
+    public void onSingleMessageReceived(RequestMessage message);
 
-    public void onCMDMessage(TransMessage message);
+    public void onCMDMessage(RequestMessage message);
 }

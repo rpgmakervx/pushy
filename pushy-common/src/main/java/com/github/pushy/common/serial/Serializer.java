@@ -391,6 +391,10 @@ abstract public class Serializer {
         this.writeBuffer = buffer;
         write();
     }
+    public void writeToTargetBuffer(byte[] buffer){
+        this.writeBuffer.writeBytes(buffer);
+        write();
+    }
 
     /**
      * 获取对象序列化后的字节数组

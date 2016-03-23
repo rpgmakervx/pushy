@@ -6,7 +6,7 @@ package com.github.pushy.client.bootstrap;/**
 
 import com.github.pushy.client.handler.ClientChildChannelHandler;
 import com.github.pushy.client.manager.MessageManager;
-import com.github.pushy.common.pojo.message.TransMessage;
+import com.github.pushy.common.pojo.request.Request;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -88,10 +88,10 @@ public final class ClientBootstrap {
      * @param transMessage
      * @throws InterruptedException
      */
-    public void sendMessage(TransMessage transMessage){
+    public void sendRequest(Request request){
 //        if(channel == null || !channel.isActive()){
 //            connect();
 //        }
-        channel.writeAndFlush(transMessage);
+        channel.writeAndFlush(request);
     }
 }

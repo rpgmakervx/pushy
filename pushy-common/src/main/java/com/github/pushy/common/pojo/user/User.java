@@ -4,18 +4,18 @@ package com.github.pushy.common.pojo.user;/**
  *  12:05
  */
 
+import com.github.pushy.common.serial.Serializer;
+
 /**
  * Description : User
  * Created by YangZH on 2016/3/21 0021
  * 12:05
  */
 
-public class User {
+public class User extends Serializer{
 
     private String clientId;
     private String password;
-
-    private String action;
 
     public String getClientId() {
         return clientId;
@@ -33,11 +33,15 @@ public class User {
         this.password = password;
     }
 
-    public String getAction() {
-        return action;
+    @Override
+    public void write() {
+        writeString(clientId);
+        writeString(password);
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    @Override
+    public void read() {
+        clientId = readString();
+        password = readString();
     }
 }

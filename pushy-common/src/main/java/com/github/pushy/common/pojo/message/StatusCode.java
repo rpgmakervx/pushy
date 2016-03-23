@@ -10,6 +10,9 @@ package com.github.pushy.common.pojo.message;/**
  * 23:06
  */
 
-public enum StatusCode {
-    SUCCESS,LOGIN_FAIL,SERVER_ERROR;
+public interface StatusCode {
+    public static final byte SUCCESS = 0X00;
+    public static final byte NOT_FOUND = 0X04;
+    public static final byte FORIDDENB = 0X03;
+    public static final byte SERVER_ERROR = 0X05;
 }

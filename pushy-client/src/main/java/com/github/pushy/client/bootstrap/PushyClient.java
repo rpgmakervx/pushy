@@ -7,7 +7,7 @@ package com.github.pushy.client.bootstrap;/**
  */
 
 import com.github.pushy.client.manager.MessageManager;
-import com.github.pushy.common.pojo.message.PMessage;
+import com.github.pushy.common.pojo.message.RequestMessage;
 import com.github.pushy.common.util.Constants;
 
 /**
@@ -52,7 +52,7 @@ public final class PushyClient {
         bootstrap.connect();
     }
 
-    public void sendMessage(PMessage pMessage){
+    public void sendMessage(RequestMessage requestMessage){
 
     }
 }

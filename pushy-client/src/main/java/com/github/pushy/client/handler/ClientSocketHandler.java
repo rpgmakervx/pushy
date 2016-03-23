@@ -4,10 +4,8 @@ package com.github.pushy.client.handler;/**
  *  22:24
  */
 
-import com.github.pushy.client.listener.MessageListener;
 import com.github.pushy.client.manager.MessageManager;
-import com.github.pushy.common.pojo.message.TransMessage;
-import com.github.pushy.common.util.Constants;
+import com.github.pushy.common.pojo.response.Response;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -27,21 +25,8 @@ public class ClientSocketHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        TransMessage transMessage = (TransMessage) msg;
-        System.out.println("客户端收到消息 "+msg);
-        MessageListener listener = messageManager.getMessageListener();
-        byte msgType = transMessage.getTransHeader().getMessageType();
-        switch(msgType){
-            case Constants.MessageType.GROUP:
-                listener.onGroupMessageReceived(transMessage);
-                break;
-            case Constants.MessageType.SINGLE:
-                listener.onSingleMessageReceived(transMessage);
-                break;
-            case Constants.MessageType.CMD:
-                listener.onCMDMessage(transMessage);
-                break;
-        }
+        Response response = (Response) msg;
+        System.out.println("客户端收到消息 "+response);
 
     }
 
